@@ -1,4 +1,4 @@
-# Discrete p-dispersion Problem
+# Discrete p-dispersion problem
 
 Izbrati moramo p poslopji iz nabora n poslopji tako, da je minimalna razdalja med izbranimi poslopji minimizirana.
 
