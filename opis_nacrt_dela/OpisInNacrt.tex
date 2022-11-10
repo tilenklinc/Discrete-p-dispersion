@@ -44,4 +44,16 @@ Omenimo, da bi v primeru raketnih silosov pride v poštev evklidska razdalja, v 
 restavracij pa razdalja po mestnih ulicah. A na naše reševanje problema metrika ne bo 
 vplivala.
 
+\section{Formalizacija problema}
+
+Za lokacije imamo podano lokacije $ I = \{ 1, 2, \ldots, n \} $ in matriko $ D \in 
+\mathbb{R}^{n \times n} $, kjer nam $ d_{ij} \in D $ pove rezdaljo med lokacijo $ i $
+in lokacijo $ j $. Rešujemo optimizacijski problem
+\begin{align*}
+    & \max f(U) \\
+    & \text{p.p. } f(U) = \min \{ d_{ij} \mid 1 \leq i \leq j \leq p \} \\
+    & \qquad U \subseteq I \\
+    & \qquad |U| = p .
+\end{align*}
+
 \end{document}
