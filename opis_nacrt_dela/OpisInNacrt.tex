@@ -1,4 +1,4 @@
-\documentclass{amsart}
+\documentclass{article}
 \usepackage{fullpage}
 
 \usepackage[T1]{fontenc}
@@ -8,12 +8,15 @@
 \usepackage{hyperref}
 \usepackage{amsmath,amssymb,amsfonts, mathtools}
 \usepackage{bbm}
+\usepackage{hyperref}
+\usepackage{makeidx}
 
-\linespread{1.2}
+\makeindex
 
-\title{Descrete-p-dispersion problem}
-\author{Tilen Klinc}
-\author{Janez Podlogar}
+\linespread{1.1}
+
+\title{Descrete $p$-dispersion problem}
+\author{Tilen Klinc, Janez Podlogar}
 \date{\today}
 
 \begin{document}
@@ -24,7 +27,7 @@
 
 Obravnavamo problem izbire $ p $ točk iz nabora $ n $ točk v nekem prostoru
 tako, da je minimalna razdalja med izbranimi točkami maksimizirana. Cilje je
-izbrati točke tako, da so čim bolj "razpršene". Problem se pojavi v kontekstu
+izbrati točke tako, da so čim bolj ``razpršene''. Problem se pojavi v kontekstu
 logistike, ko je bližina poslopji nezaželjena.
 
 
@@ -55,5 +58,27 @@ in lokacijo $ j $. Rešujemo optimizacijski problem
     & \qquad U \subseteq I \\
     & \qquad |U| = p .
 \end{align*}
+
+\section{Načrt dela}
+
+Predstavila bova ``Kuby''\cite{kuby1987programming} formulacijo optimizacijskega problema 
+in kompaktno linearno formulacijo problema opisano v ``Sayah in Irnich''\cite{sayah2017new}.
+
+Problem bomo reševali minimizacijo v dani smeri oziroma \textit{line search} in z 
+zgoraj omenjenim kompaktnim linearnim programom v katerega bomo vključili spodnje in zgornje omejitve
+problema \cite{sayah2017new}. Oba algoritma bomo primerjali na naključno generiranih
+točkah v ravnini.
+
+Algoritme bova implementirana v programskem okolju \textbf{Sage}. V primeru, da bo
+\textbf{Sage} pretežak se bova zanesla na \textbf{R} in knjižnico \textbf{lpsolve}
+ali pa na \textbf{Python} in paket \textbf{SciPy}.
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{literatura}
+\printindex
 
 \end{document}
