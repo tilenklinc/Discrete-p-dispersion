@@ -87,12 +87,12 @@ def PozresnaMetoda(D, p):
             # ce najdemo daljso, posodobimo
             # razdaljo in optimalno tocko.
             else:
-                for p in P:
-                    if D[t, p] > razdalja:
-                        razdalja = D[t, p]
+                for q in P:
+                    if D[t, q] > razdalja:
+                        razdalja = D[t, q]
                         optimalna_tocka = t
             # Nasli smo optimalno tocko t glede
             # na ze izbrane tocke iz mnozice P.
             # Tocko t dodamo v mnozico P.
-            P.add(t)
-    return P
+        P.add(optimalna_tocka)
+    return (MinRazdalja(D,P), P)
