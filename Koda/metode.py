@@ -1,5 +1,18 @@
 import itertools
 import numpy as np
+import cvxpy as cp
+from scipy.spatial import distance_matrix
+np.random.seed(2022)
+
+def GeneratorProblema(n):
+    # Generiramo problem velikosti n
+    # z najkljucno izbranim p med 3 in n,
+    # saj so primeri, ko izberemo le en 
+    # par tock trivialni.
+    tocke = np.random.rand(n,2)
+    D = distance_matrix(tocke,tocke)
+    p = np.random.randint(1,n)
+    return (D,p)
 
 def GeneratorMatrike(n):
     # Generirajmo simetricno matriko z
@@ -46,7 +59,7 @@ def BruteForceMetoda(D, p):
         if min_razdalja > optimalna_razdalja:
             optimalna_razdalja = min_razdalja
             P = set(izbor)
-    return (optimalna_razdalja, P)
+    return (MinRazdalja(D,P), P)
 
 
 def PozresnaMetoda(D, p):
@@ -87,12 +100,44 @@ def PozresnaMetoda(D, p):
             # ce najdemo daljso, posodobimo
             # razdaljo in optimalno tocko.
             else:
-                for p in P:
-                    if D[t, p] > razdalja:
-                        razdalja = D[t, p]
+                for q in P:
+                    if D[t, q] > razdalja:
+                        razdalja = D[t, q]
                         optimalna_tocka = t
             # Nasli smo optimalno tocko t glede
             # na ze izbrane tocke iz mnozice P.
             # Tocko t dodamo v mnozico P.
-            P.add(t)
-    return P
+        P.add(optimalna_tocka)
+    return (MinRazdalja(D,P), P)
+ 
+# Pomozna funckija 
+def RSeperationLin(D,r):
+    # Ustvarimo matriko enacb E
+    n = len(D)
+    A = D.copy
+    A = D.copy()
+    A[A < r] = 1
+    np.fill_diagonal(A, 0)
+    stevilo_enic = np.count_nonzero(A == 1)
+    E = [[0 for x in range(n)] for y in range(stevilo_enic)]
+    stevilo_enacb = 0
+    while stevilo_enacb < stevilo_enic:
+        for i in range(0, n):
+            for j in range(i+1, n):
+                if A[i][j] == 1:
+                    E[stevilo_enacb][i] = 1
+                    E[stevilo_enacb][j] = 1
+                    stevilo_enacb +=1
+    # Resimo (0-1) linearni program
+    x = cp.Variable(n, boole = True)
+    c = [1] * n
+    b = [1] * stevilo_enacb
+    program = cp.Problem(cp.Minimize(c @ x), [E @ x >= b])
+    # Preberemo koliko tock izmed n smo izbrali
+    p = program.solve(solver=cp.GLPK_MI)
+    # Preberemo katere tocke smo vzeli
+    P = set()
+    for i in range(0, n):
+        if x.value[i] == 1:
+            P.add(i)
+    return (p,P)
