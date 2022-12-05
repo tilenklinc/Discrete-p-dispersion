@@ -4,6 +4,7 @@ import cvxpy as cp
 from scipy.spatial import distance_matrix
 np.random.seed(2022)
 
+
 def GeneratorProblema(n):
     # Generiramo problem velikosti n
     # z najkljucno izbranim p med 3 in n,
@@ -11,7 +12,7 @@ def GeneratorProblema(n):
     # par tock trivialni.
     tocke = np.random.rand(n,2)
     D = distance_matrix(tocke,tocke)
-    p = np.random.randint(1,n)
+    p = np.random.randint(3,n)
     return (D,p)
 
 def GeneratorMatrike(n):
@@ -109,7 +110,8 @@ def PozresnaMetoda(D, p):
             # Tocko t dodamo v mnozico P.
         P.add(optimalna_tocka)
     return (MinRazdalja(D,P), P)
- 
+
+    
 # Pomozna funckija 
 def RSeperationLin(D,r):
     # Ustvarimo matriko enacb E
