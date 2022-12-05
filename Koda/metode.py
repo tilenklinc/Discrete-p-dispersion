@@ -2,6 +2,7 @@ import itertools
 import numpy as np
 import cvxpy as cp
 from scipy.spatial import distance_matrix
+from math import floor
 np.random.seed(2022)
 
 
@@ -51,7 +52,7 @@ def BruteForceMetoda(D, p):
     # Funkcija vrne minimalno razdaljo in
     # nabor tock P, kjer je dosezena.
     n = len(D)
-    P = set
+    P = set()
     optimalna_razdalja = 0
     tocke = list(range(0, n))
     vsi_izbori_p_tock = itertools.combinations(tocke, p)
@@ -116,7 +117,6 @@ def PozresnaMetoda(D, p):
 def RSeperationLin(D,r):
     # Ustvarimo matriko enacb E
     n = len(D)
-    A = D.copy
     A = D.copy()
     A[A < r] = 1
     np.fill_diagonal(A, 0)
@@ -131,7 +131,8 @@ def RSeperationLin(D,r):
                     E[stevilo_enacb][j] = 1
                     stevilo_enacb +=1
     # Resimo (0-1) linearni program
-    x = cp.Variable(n, boole = True)
+    E = np.array(E)
+    x = cp.Variable(n, boolean = True)
     c = [1] * n
     b = [1] * stevilo_enacb
     program = cp.Problem(cp.Minimize(c @ x), [E @ x >= b])
@@ -145,4 +146,26 @@ def RSeperationLin(D,r):
     return (p,P)
 
 def BisekcijskaMetoda(D,p):
-    R = np.unique(D)
+    n = len(D)
+    # Uredimo razdalje iz matrike D po velikosti
+    # in upostevamo veckratnost
+    R = list()
+    for i in range(0, n):
+        for j in range(i+1, n):
+            R.append(D[i][j])
+    R.sort()
+    # Upostevamo hevristiko:
+    # Zgornja meja u
+    u = int(n * (n - 1) / 2 - p * (p - 1) / 2 - 1)
+    # Spodna meja
+    l = n - p - 1
+    # Zacnimo z bisekcijo
+    RestiveLin = RSeperationLin(D, R[l])
+    while RestiveLin[0] != p:
+        c = floor((l + u) / 2)
+        RestiveLin = RSeperationLin(D, R[c])
+        if RestiveLin[0] < p:
+            l = c
+        elif RestiveLin[0] > p:
+            u = c
+    return (MinRazdalja(D, RestiveLin[1]), RestiveLin[1])
