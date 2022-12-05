@@ -2,22 +2,26 @@ import itertools
 import numpy as np
 import cvxpy as cp
 from scipy.spatial import distance_matrix
+from math import floor
 np.random.seed(2022)
 
-def GeneratorProblema(n):
+
+def GeneratorProblema(n, p):
     # Generiramo problem velikosti n
     # z najkljucno izbranim p med 3 in n,
-    # saj so primeri, ko izberemo le en 
+    # saj so primeri, ko izberemo le en
     # par tock trivialni.
-    tocke = np.random.rand(n,2)
-    D = distance_matrix(tocke,tocke)
-    p = np.random.randint(1,n)
-    return (D,p)
+    if p < 2 or p > n:
+        print('Neveljaven p')
+    tocke = np.random.rand(n, 2)
+    D = distance_matrix(tocke, tocke)
+    return (D, p)
+
 
 def GeneratorMatrike(n):
     # Generirajmo simetricno matriko z
     # niclami na diagonali.
-    D = np.random.rand(n,n)
+    D = np.random.rand(n, n)
     D = (D + D.T) / 2
     np.fill_diagonal(D, 0)
     return D
@@ -32,13 +36,13 @@ def MinRazdalja(D, P):
     # med izbranimi tockami in tocki,
     # kjer je dosezena.
     par = set
-    min_razdalja = 1
+    min_razdalja = np.max(D)
     for i in P:
         for j in P:
             if i == j:
                 continue
             else:
-                if D[i, j] < min_razdalja:
+                if D[i, j] <= min_razdalja:
                     min_razdalja = D[i, j]
                     par = {i, j}
     return (min_razdalja, par)
@@ -50,7 +54,7 @@ def BruteForceMetoda(D, p):
     # Funkcija vrne minimalno razdaljo in
     # nabor tock P, kjer je dosezena.
     n = len(D)
-    P = set
+    P = set()
     optimalna_razdalja = 0
     tocke = list(range(0, n))
     vsi_izbori_p_tock = itertools.combinations(tocke, p)
@@ -59,7 +63,7 @@ def BruteForceMetoda(D, p):
         if min_razdalja > optimalna_razdalja:
             optimalna_razdalja = min_razdalja
             P = set(izbor)
-    return (MinRazdalja(D,P), P)
+    return (MinRazdalja(D, P), P)
 
 
 def PozresnaMetoda(D, p):
@@ -108,13 +112,13 @@ def PozresnaMetoda(D, p):
             # na ze izbrane tocke iz mnozice P.
             # Tocko t dodamo v mnozico P.
         P.add(optimalna_tocka)
-    return (MinRazdalja(D,P), P)
- 
-# Pomozna funckija 
-def RSeperationLin(D,r):
+    return (MinRazdalja(D, P), P)
+
+
+# Pomozna funckija za BisekcijskaMetoda
+def RSeperationLin(D, r):
     # Ustvarimo matriko enacb E
     n = len(D)
-    A = D.copy
     A = D.copy()
     A[A < r] = 1
     np.fill_diagonal(A, 0)
@@ -127,9 +131,10 @@ def RSeperationLin(D,r):
                 if A[i][j] == 1:
                     E[stevilo_enacb][i] = 1
                     E[stevilo_enacb][j] = 1
-                    stevilo_enacb +=1
+                    stevilo_enacb += 1
     # Resimo (0-1) linearni program
-    x = cp.Variable(n, boole = True)
+    E = np.array(E)
+    x = cp.Variable(n, boolean=True)
     c = [1] * n
     b = [1] * stevilo_enacb
     program = cp.Problem(cp.Minimize(c @ x), [E @ x >= b])
@@ -140,4 +145,35 @@ def RSeperationLin(D,r):
     for i in range(0, n):
         if x.value[i] == 1:
             P.add(i)
-    return (p,P)
+    return (p, P)
+
+
+def BisekcijskaMetoda(D, p):
+    n = len(D)
+    # Uredimo razdalje iz matrike D po velikosti
+    # z upostevanjem veckratnosti
+    R = list()
+    for i in range(0, n):
+        for j in range(i+1, n):
+            R.append(D[i][j])
+    R.sort()
+    # Upostevamo hevristiko
+    # Zgornja meja u
+    u = int(n * (n - 1) / 2 - p * (p - 1) / 2 - 1)
+    # Spodna meja
+    l = n - p - 1
+    # Funckija RSeperationLin je narascajoca funkcija
+    # v argumentu r.
+    # Zacnimo z bisekcijo, najprej pogledamo spodnjo
+    # mejo. Nato se premikamo s polovicnimi koraki.
+    # Ko naletimi resitev, ki izvere p tock se ustavimo.
+    # To ni optimalna resitev, le dopustna.
+    RestiveLin = RSeperationLin(D, R[l])
+    while RestiveLin[0] != p:
+        c = floor((l + u) / 2)
+        RestiveLin = RSeperationLin(D, R[c])
+        if RestiveLin[0] < p:
+            l = c
+        elif RestiveLin[0] > p:
+            u = c
+    return (MinRazdalja(D, RestiveLin[1]), RestiveLin[1])
