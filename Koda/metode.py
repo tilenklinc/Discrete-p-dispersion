@@ -6,14 +6,15 @@ from math import floor
 np.random.seed(2022)
 
 
-def GeneratorProblema(n):
+def GeneratorProblema(n,p):
     # Generiramo problem velikosti n
     # z najkljucno izbranim p med 3 in n,
     # saj so primeri, ko izberemo le en 
     # par tock trivialni.
+    if p < 2 or p > n:
+        print('Neveljaven p')
     tocke = np.random.rand(n,2)
     D = distance_matrix(tocke,tocke)
-    p = np.random.randint(3,n)
     return (D,p)
 
 def GeneratorMatrike(n):
