@@ -51,10 +51,11 @@ vplivala.
 
 Za lokacije imamo podano lokacije $ I = \{ 1, 2, \ldots, n \} $ in matriko $ D \in 
 \mathbb{R}^{n \times n} $, kjer nam $ d_{ij} \in D $ pove rezdaljo med lokacijo $ i $
-in lokacijo $ j $. Rešujemo optimizacijski problem
+in lokacijo $ j $. Brez škode za splošnost predpostavimo, da je matrika D simetrična in
+da so njeni ne diagonalni elementi strogo pozitivni. Rešujemo optimizacijski problem
 \begin{align*}
     & \max f(U) \\
-    & \text{p.p. } f(U) = \min \{ d_{ij} \mid 1 \leq i \leq j \leq p \} \\
+    & \text{p.p. } f(U) = \min \{ d_{ij} \mid i,j \in U \text{ in } i \neq j \} \\
     & \qquad U \subseteq I \\
     & \qquad |U| = p .
 \end{align*}
