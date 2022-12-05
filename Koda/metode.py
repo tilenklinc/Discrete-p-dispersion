@@ -33,13 +33,13 @@ def MinRazdalja(D, P):
     # med izbranimi tockami in tocki,
     # kjer je dosezena.
     par = set
-    min_razdalja = 1
+    min_razdalja = np.max(D)
     for i in P:
         for j in P:
             if i == j:
                 continue
             else:
-                if D[i, j] < min_razdalja:
+                if D[i, j] <= min_razdalja:
                     min_razdalja = D[i, j]
                     par = {i, j}
     return (min_razdalja, par)
@@ -143,3 +143,6 @@ def RSeperationLin(D,r):
         if x.value[i] == 1:
             P.add(i)
     return (p,P)
+
+def BisekcijskaMetoda(D,p):
+    R = np.unique(D)
