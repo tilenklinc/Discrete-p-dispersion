@@ -1,6 +1,18 @@
 import itertools
 import numpy as np
 import cvxpy as cp
+from scipy.spatial import distance_matrix
+np.random.seed(2022)
+
+def GeneratorProblema(n):
+    # Generiramo problem velikosti n
+    # z najkljucno izbranim p med 3 in n,
+    # saj so primeri, ko izberemo le en 
+    # par tock trivialni.
+    tocke = np.random.rand(n,2)
+    D = distance_matrix(tocke,tocke)
+    p = np.random.randint(1,n)
+    return (D,p)
 
 def GeneratorMatrike(n):
     # Generirajmo simetricno matriko z
@@ -98,7 +110,7 @@ def PozresnaMetoda(D, p):
         P.add(optimalna_tocka)
     return (MinRazdalja(D,P), P)
  
-
+# Pomozna funckija 
 def RSeperationLin(D,r):
     # Ustvarimo matriko enacb E
     n = len(D)
