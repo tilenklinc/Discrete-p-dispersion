@@ -6,7 +6,7 @@ from math import floor
 np.random.seed(2022)
 
 
-def GeneratorProblema(n,p):
+def GeneratorProblema(n, p):
     # Generiramo problem velikosti n
     # z najkljucno izbranim p med 3 in n,
     # saj so primeri, ko izberemo le en 
@@ -114,7 +114,7 @@ def PozresnaMetoda(D, p):
     return (MinRazdalja(D,P), P)
 
     
-# Pomozna funckija 
+# Pomozna funckija za BisekcijskaMetoda
 def RSeperationLin(D,r):
     # Ustvarimo matriko enacb E
     n = len(D)
@@ -149,18 +149,23 @@ def RSeperationLin(D,r):
 def BisekcijskaMetoda(D,p):
     n = len(D)
     # Uredimo razdalje iz matrike D po velikosti
-    # in upostevamo veckratnost
+    # z upostevanjem veckratnosti
     R = list()
     for i in range(0, n):
         for j in range(i+1, n):
             R.append(D[i][j])
     R.sort()
-    # Upostevamo hevristiko:
+    # Upostevamo hevristiko
     # Zgornja meja u
     u = int(n * (n - 1) / 2 - p * (p - 1) / 2 - 1)
     # Spodna meja
     l = n - p - 1
-    # Zacnimo z bisekcijo
+    # Funckija RSeperationLin je narascajoca funkcija
+    # v argumentu r.
+    # Zacnimo z bisekcijo, najprej pogledamo spodnjo
+    # mejo. Nato se premikamo s polovicnimi koraki.
+    # Ko naletimi resitev, ki izvere p tock se ustavimo.
+    # To ni optimalna resitev, le dopustna.
     RestiveLin = RSeperationLin(D, R[l])
     while RestiveLin[0] != p:
         c = floor((l + u) / 2)
