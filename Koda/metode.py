@@ -9,18 +9,19 @@ np.random.seed(2022)
 def GeneratorProblema(n, p):
     # Generiramo problem velikosti n
     # z najkljucno izbranim p med 3 in n,
-    # saj so primeri, ko izberemo le en 
+    # saj so primeri, ko izberemo le en
     # par tock trivialni.
     if p < 2 or p > n:
         print('Neveljaven p')
-    tocke = np.random.rand(n,2)
-    D = distance_matrix(tocke,tocke)
-    return (D,p)
+    tocke = np.random.rand(n, 2)
+    D = distance_matrix(tocke, tocke)
+    return (D, p)
+
 
 def GeneratorMatrike(n):
     # Generirajmo simetricno matriko z
     # niclami na diagonali.
-    D = np.random.rand(n,n)
+    D = np.random.rand(n, n)
     D = (D + D.T) / 2
     np.fill_diagonal(D, 0)
     return D
@@ -62,7 +63,7 @@ def BruteForceMetoda(D, p):
         if min_razdalja > optimalna_razdalja:
             optimalna_razdalja = min_razdalja
             P = set(izbor)
-    return (MinRazdalja(D,P), P)
+    return (MinRazdalja(D, P), P)
 
 
 def PozresnaMetoda(D, p):
@@ -111,11 +112,11 @@ def PozresnaMetoda(D, p):
             # na ze izbrane tocke iz mnozice P.
             # Tocko t dodamo v mnozico P.
         P.add(optimalna_tocka)
-    return (MinRazdalja(D,P), P)
+    return (MinRazdalja(D, P), P)
 
-    
+
 # Pomozna funckija za BisekcijskaMetoda
-def RSeperationLin(D,r):
+def RSeperationLin(D, r):
     # Ustvarimo matriko enacb E
     n = len(D)
     A = D.copy()
@@ -130,10 +131,10 @@ def RSeperationLin(D,r):
                 if A[i][j] == 1:
                     E[stevilo_enacb][i] = 1
                     E[stevilo_enacb][j] = 1
-                    stevilo_enacb +=1
+                    stevilo_enacb += 1
     # Resimo (0-1) linearni program
     E = np.array(E)
-    x = cp.Variable(n, boolean = True)
+    x = cp.Variable(n, boolean=True)
     c = [1] * n
     b = [1] * stevilo_enacb
     program = cp.Problem(cp.Minimize(c @ x), [E @ x >= b])
@@ -144,9 +145,10 @@ def RSeperationLin(D,r):
     for i in range(0, n):
         if x.value[i] == 1:
             P.add(i)
-    return (p,P)
+    return (p, P)
 
-def BisekcijskaMetoda(D,p):
+
+def BisekcijskaMetoda(D, p):
     n = len(D)
     # Uredimo razdalje iz matrike D po velikosti
     # z upostevanjem veckratnosti
