@@ -3,6 +3,7 @@ import numpy as np
 import cvxpy as cp
 from scipy.spatial import distance_matrix
 from math import floor
+import datetime
 np.random.seed(2022)
 
 
@@ -169,11 +170,40 @@ def BisekcijskaMetoda(D, p):
     # Ko naletimi resitev, ki izvere p tock se ustavimo.
     # To ni optimalna resitev, le dopustna.
     RestiveLin = RSeperationLin(D, R[l])
+    stevec = 0
     while RestiveLin[0] != p:
+        stevec += 1
         c = floor((l + u) / 2)
         RestiveLin = RSeperationLin(D, R[c])
         if RestiveLin[0] < p:
             l = c
         elif RestiveLin[0] > p:
             u = c
+        if stevec == 200:
+            return((None, None), None)
     return (MinRazdalja(D, RestiveLin[1]), RestiveLin[1])
+
+        
+def izvedi_funkcijo(N, P, stevilo_ponovitev):
+    # Poskusi je kolikokrat ponovimo funkcijo
+    for n in N:
+        for p in P:
+            print(n, p)
+            ime_datoteke = "poskus_n_" + str(n) + "_p_" + str(p) + ".csv"
+            f = open(ime_datoteke, "w") # w --> Za na novo write, "a" --> za append
+            f.write('ponovitev;najmanjsaRazdalja_B;najblizjiPar_B;tocke_B;casIzvajanja_B;najmanjsaRazdalja_P;najblizjiPar_P;tocke_;casIzvajanja_P\n')
+            for i in range(stevilo_ponovitev):
+                D, p = GeneratorProblema(n, p)
+                   
+                zacetek1 = datetime.datetime.now()
+                r1, tocke1 = BisekcijskaMetoda(D, p)
+                rez1, mini1 = r1
+                konec1 = datetime.datetime.now()-zacetek1
+                    
+                zacetek2 = datetime.datetime.now()
+                r2, tocke2 = PozresnaMetoda(D, p)
+                rez2, mini2 = r2
+                konec2 = datetime.datetime.now()-zacetek2
+                
+                f.write(str(i+1) + ';' + str(rez1) + ';' + str(mini1) + ';' + str(tocke1) + ';' + str(konec1) + ';' + str(rez2) + ';' + str(mini2) + ';' + str(tocke2) + ';' + str(konec2) + '\n')
+            f.close()
