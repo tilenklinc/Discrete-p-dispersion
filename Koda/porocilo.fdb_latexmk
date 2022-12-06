@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1670360132 "c:/Users/Janez/Documents/fmf/fin3/FP/Discrete-p-dispersion/Koda/porocilo.tex" "porocilo.pdf" "porocilo" 1670360138
+["pdflatex"] 1670360370 "c:/Users/Janez/Documents/fmf/fin3/FP/Discrete-p-dispersion/Koda/porocilo.tex" "porocilo.pdf" "porocilo" 1670360378
   "C:/Users/Janez/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1670343458 85453 86831e3d794c6495c52ccacd36d62295 ""
   "C:/Users/Janez/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1665314238 10785261 cb246bbd55baafed26efeca16959333b ""
   "C:/Users/Janez/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
@@ -171,16 +171,16 @@
   "C:/Users/Janez/AppData/Local/Programs/MiKTeX/tex/latex/tools/calc.sty" 1636710260 10214 00ce62e730d0cfe22b35e8f1c84949c7 ""
   "C:/Users/Janez/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Janez/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656233290 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/Users/Janez/Documents/fmf/fin3/FP/Discrete-p-dispersion/Koda/porocilo.tex" 1670360129 11285 988694de6431315a7e38b9c2f8c0b75a ""
+  "c:/Users/Janez/Documents/fmf/fin3/FP/Discrete-p-dispersion/Koda/porocilo.tex" 1670360348 11283 5da97bfa19bf6ca70b2ea3c35e0aada1 ""
   "n_10.png" 1670343389 22823 9ba4bb6cd417ee2dc5829ec2d986ec09 ""
   "n_10_time.png" 1670343389 14985 efeb2d1d9815b29735a404759e753e9c ""
   "n_20.png" 1670343389 20780 c52369b5c652ea29ee935af1f381bed4 ""
   "n_20_time.png" 1670343389 13773 89877fc08cc54af44be3fe613c4e58df ""
   "n_50.png" 1670343389 21089 2225eb6d5b102eeb4ad30a71e0c40030 ""
   "n_50_time.png" 1670343389 12596 eba92f390ae4ba62da6c5646e9e028e1 ""
-  "porocilo.aux" 1670360137 4085 eb4319f0ddfd08cbe11df7e3870083cc "pdflatex"
-  "porocilo.out" 1670360137 1398 2ab54b7d8179f40888c6b0e9333bd4e0 "pdflatex"
-  "porocilo.tex" 1670360129 11285 988694de6431315a7e38b9c2f8c0b75a ""
+  "porocilo.aux" 1670360376 4083 1452791d27ac8460afb325911ed5ce62 "pdflatex"
+  "porocilo.out" 1670360376 1388 fdce700940eb00c7f46930997d5e7a7e "pdflatex"
+  "porocilo.tex" 1670360348 11283 5da97bfa19bf6ca70b2ea3c35e0aada1 ""
   (generated)
   "porocilo.aux"
   "porocilo.log"

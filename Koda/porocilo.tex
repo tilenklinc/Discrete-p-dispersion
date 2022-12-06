@@ -130,7 +130,7 @@ vrne matriko $ D \in \mathbb{R}^{n \times n} $ razdalj med točkami. Drugi argum
 je celo število $ p \in \{ 3, 4, 5 \ldots n \} $. Primeri, ko je $ p = 2 $ nas ne
 zanimajo, saj so trivialno optimalno rešljivi.
 
-\section{Testiranje modelov na generiranih podatkih}
+\section{Testiranje metod na generiranih podatkih}
 
 Testirali smo dve metodi za reševanje problema. Prva metoda je bila bisekcijska metoda, druga pa požrešna metoda. Spreminjali smo tako $n$ kot $p$ parameter. Pri vsakem paru parametrov smo poskus ponovili za $100$ različnih problemov. Problem sestoji iz matrike razdalji, ki je velikosti $n \times n$ in parametra $p$, ki nam pove koliko lokacij si bomo izbrali. Matrike so bile naključno generirane, pri čemer smo upoštevali tudi trikotniško neenakost. Da je poskus ponovljiv smo tudi fiksirali random seed in sicer z $np.random.seed(2022)$. Ker se bisekcija metoda lahko zacikla, smo jo omejili, da se po $200$ ne uspelih poskusih samostojno prekine in vrne $None$, kar pomeni, da metoda ni skonvergirala.
 
