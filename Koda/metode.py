@@ -207,3 +207,7 @@ def izvedi_funkcijo(N, P, stevilo_ponovitev):
                 
                 f.write(str(i+1) + ';' + str(rez1) + ';' + str(mini1) + ';' + str(tocke1) + ';' + str(konec1) + ';' + str(rez2) + ';' + str(mini2) + ';' + str(tocke2) + ';' + str(konec2) + '\n')
             f.close()
+    
+izvedi_funkcijo([10], [3, 4, 5, 6, 7], 100)
+izvedi_funkcijo([20], [5, 8, 10, 12, 15], 100)
+izvedi_funkcijo([50], [10, 20, 25, 30, 40], 100)
